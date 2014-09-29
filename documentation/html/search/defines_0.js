@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['request_5frate',['REQUEST_RATE',['../_i_s_s_notify_8ino.html#a5d56419a84adf86a92e869e516ff37af',1,'ISSNotify.ino']]]
+  ['hour_5fin_5fmillis',['HOUR_IN_MILLIS',['../_i_s_s_notify_8ino.html#a9a0321cdbdf03d0993c8619c2bb94f94',1,'ISSNotify.ino']]]
 ];

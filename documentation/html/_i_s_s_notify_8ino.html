@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">ISS Notify
-   &#160;<span id="projectnumber">1</span>
+   &#160;<span id="projectnumber">1.2</span>
    </div>
    <div id="projectbrief">A notification lamp that lights when the ISS is above</div>
   </td>
@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,26 +87,88 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">ISSNotify.ino File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Arduino code to activate a light when the International Space Station is above the current loctation.  
+<p>Arduino sketch to activate a light when the International Space Station is above the current loctation.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;EtherCard.h&gt;</code><br/>
+<code>#include &quot;apikey.h&quot;</code><br/>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a5d56419a84adf86a92e869e516ff37af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a5d56419a84adf86a92e869e516ff37af">REQUEST_RATE</a>&#160;&#160;&#160;5000</td></tr>
+<tr class="memitem:ae3f14d5c786fb27f4cb9a5b934590f10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ae3f14d5c786fb27f4cb9a5b934590f10">MINUTE_IN_MILLIS</a>&#160;&#160;&#160;(1000*60L)</td></tr>
+<tr class="separator:ae3f14d5c786fb27f4cb9a5b934590f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a0321cdbdf03d0993c8619c2bb94f94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a9a0321cdbdf03d0993c8619c2bb94f94">HOUR_IN_MILLIS</a>&#160;&#160;&#160;<a class="el" href="_i_s_s_notify_8ino.html#ae3f14d5c786fb27f4cb9a5b934590f10">MINUTE_IN_MILLIS</a>*60L</td></tr>
+<tr class="separator:a9a0321cdbdf03d0993c8619c2bb94f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa84043f76ec1d7faa114a40c94589570"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#aa84043f76ec1d7faa114a40c94589570">PRINT_TOKEN</a>(token)&#160;&#160;&#160;Serial.println(#token &quot; is %d&quot;, token)</td></tr>
+<tr class="separator:aa84043f76ec1d7faa114a40c94589570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d56419a84adf86a92e869e516ff37af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a5d56419a84adf86a92e869e516ff37af">REQUEST_RATE</a>&#160;&#160;&#160;20000</td></tr>
 <tr class="separator:a5d56419a84adf86a92e869e516ff37af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf70a18acd43539748fb6f326a03e142"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#acf70a18acd43539748fb6f326a03e142">URL_BUFF_SIZE</a>&#160;&#160;&#160;75</td></tr>
+<tr class="separator:acf70a18acd43539748fb6f326a03e142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ca25eac6016e0d1a9b120241043038"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ae1ca25eac6016e0d1a9b120241043038">RETURN_LEN_GEOIPLAT</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:ae1ca25eac6016e0d1a9b120241043038"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa46b9aae668f9e8b54178527bd528051"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#aa46b9aae668f9e8b54178527bd528051">RETURN_LEN_GEOIPLONG</a>&#160;&#160;&#160;9</td></tr>
+<tr class="separator:aa46b9aae668f9e8b54178527bd528051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a468deef5eef07ea1dd7dc505a7b0c5c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a468deef5eef07ea1dd7dc505a7b0c5c7">RETURN_LEN_TIME</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a468deef5eef07ea1dd7dc505a7b0c5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b73b5e8507166939a044ae8a0bb104d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a3b73b5e8507166939a044ae8a0bb104d">RETURN_LEN_ISSDURATION</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:a3b73b5e8507166939a044ae8a0bb104d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cf98d1948637d9df340e345f3e99693"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a0cf98d1948637d9df340e345f3e99693">RETURN_LEN_ISSRISETIME</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a0cf98d1948637d9df340e345f3e99693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ab0229a3afc399b968897945cd8695789"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789">my_state_t</a> { <br/>
+&#160;&#160;<a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789aa7233cbe32327053c7d876c58c9502f5">STATE_GET_DATA</a> = 0, 
+<a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789ae605de31f69c62a564f42f2974ba7836">STATE_PROCESS_DATA</a> = 1, 
+<a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789a608c53a1dbd68672aed4b89060125da9">STATE_CALCULATE</a> = 2, 
+<a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789acc9458e203404c1e282d01bd1d41f819">STATE_LIGHT_LAMP</a> = 3, 
+<br/>
+&#160;&#160;<a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789ab48b45c95e46f218dca2c1eb5e59ca7e">STATE_SLEEP</a> = 4
+<br/>
+ }</td></tr>
+<tr class="separator:ab0229a3afc399b968897945cd8695789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a918cb555af2a664e06635e23b9ec9ff0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0">my_data_state_t</a> { <br/>
+&#160;&#160;<a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0a6422c816a93cf9fb32394c4d8668288f">STATE_GET_DATA_GEOIP_LAT</a> = 0, 
+<a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0aeeef0fa293537afbfa88a26f36ec7e18">STATE_GET_DATA_GEOIP_LONG</a> = 1, 
+<a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0ab6108065f88af10509fe87eadc7e0483">STATE_GET_DATA_TIME</a> = 2, 
+<a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0adb28d1436d09d617705c744822118441">STATE_GET_DATA_ISS_RISETIME</a> = 3, 
+<br/>
+&#160;&#160;<a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0a19b96153f44beed2348c27a8932f1d03">STATE_GET_DATA_ISS_DURATION</a> = 4
+<br/>
+ }</td></tr>
+<tr class="separator:a918cb555af2a664e06635e23b9ec9ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdaa483586eb331c9dbe3e0b6ef40182"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182">my_cb_state_t</a> { <a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182aeabb76bcdaceacdf2c3f31be407da26b">STATE_CB_WAIT</a> = 0, 
+<a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182a1810da35ccacd9c17c48540149ea8755">STATE_CB_READY</a> = 1
+ }</td></tr>
+<tr class="separator:acdaa483586eb331c9dbe3e0b6ef40182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4fc01d736fe50cf5b977f755b675f11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr class="separator:a4fc01d736fe50cf5b977f755b675f11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">my_result_cb</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Called by the ethercard library when the client request is complete.</p>
+<dl class="section note"><dt>Note</dt><dd>params must be: byte status, word off, word len </dd></dl>
+</div></td></tr>
+<tr><td colspan="2"><div class="groupHeader">init_DHCP</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Checks ethernet controller communication and initializes DHCP</p>
+<dl class="section note"><dt>Note</dt><dd>Outputs the received IP address to the serial terminal.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success. </td></tr>
+    <tr><td class="paramname">1</td><td>Failed to access Ethernet controller </td></tr>
+    <tr><td class="paramname">2</td><td>Failed to acquire DHCP </td></tr>
+  </table>
+  </dd>
+</dl>
+</div></td></tr>
+<tr class="memitem:a7d1cc8195747a623651b5919752b5d71"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a7d1cc8195747a623651b5919752b5d71">init_DHCP</a> (void)</td></tr>
+<tr class="separator:a7d1cc8195747a623651b5919752b5d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">fill_ip_with_DNS</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Fills the IP address of a given domain into the input website_ip.</p>
 <dl class="section note"><dt>Note</dt><dd>Outputs the resolved IP address to the serial terminal.</dd></dl>
@@ -125,73 +187,281 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 </div></td></tr>
-<tr class="memitem:ab71ddbc309b1e68c72dee2c07d3db0ef"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ab71ddbc309b1e68c72dee2c07d3db0ef">fill_ip_with_DNS</a> (char *website_name, uint8_t *website_ip)</td></tr>
-<tr class="separator:ab71ddbc309b1e68c72dee2c07d3db0ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">init_DHCP</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>Checks ethernet controller communication and initializes DHCP</p>
-<dl class="section note"><dt>Note</dt><dd>Outputs the received IP address to the serial terminal.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">0</td><td>Success. </td></tr>
-    <tr><td class="paramname">1</td><td>Failed to access Ethernet controller </td></tr>
-    <tr><td class="paramname">2</td><td>Failed to acquire DHCP </td></tr>
+<tr class="memitem:a2d8df359d5deaa34f85d7e03b82fb5c7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a2d8df359d5deaa34f85d7e03b82fb5c7">fill_ip_with_dns</a> (prog_char *website_name, uint8_t *website_ip)</td></tr>
+<tr class="separator:a2d8df359d5deaa34f85d7e03b82fb5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">parse_data</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>a function that searches the first 1000 chars of data "input" for a specified string "keyword", then returns up to the next delimiter or "outputlength" characters into "output" </p>
+</div></td></tr>
+<tr class="memitem:a7fc928a32525902d309d62686c057f7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a7fc928a32525902d309d62686c057f7b">parse_data</a> (char *inputData, const char *keyword, char *output, uint8_t outputlength)</td></tr>
+<tr class="separator:a7fc928a32525902d309d62686c057f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">my_atoi</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Converts a string to a 32 bit integer</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s[]</td><td>String to convert. </td></tr>
   </table>
   </dd>
 </dl>
 </div></td></tr>
-<tr class="memitem:a7d1cc8195747a623651b5919752b5d71"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a7d1cc8195747a623651b5919752b5d71">init_DHCP</a> (void)</td></tr>
-<tr class="separator:a7d1cc8195747a623651b5919752b5d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21932dacfce19b3633060a0ce671e62"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ac21932dacfce19b3633060a0ce671e62">my_atoi</a> (char *s)</td></tr>
+<tr class="separator:ac21932dacfce19b3633060a0ce671e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">print_p</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Prints a string stored in PROGMEM.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str[]</td><td>String stored in PROGMEM. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div></td></tr>
+<tr class="memitem:aeefd69796792390e4f8ed237595ebbc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#aeefd69796792390e4f8ed237595ebbc6">print_p</a> (const prog_char str[])</td></tr>
+<tr class="separator:aeefd69796792390e4f8ed237595ebbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc01d736fe50cf5b977f755b675f11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
+<tr class="separator:a4fc01d736fe50cf5b977f755b675f11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe461d27b9c48d5921c00d521181f12f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#afe461d27b9c48d5921c00d521181f12f">loop</a> ()</td></tr>
 <tr class="separator:afe461d27b9c48d5921c00d521181f12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a2e459bfb33a48a5dbc41b8199ca28c76"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a2e459bfb33a48a5dbc41b8199ca28c76">error_led</a> = 13</td></tr>
+<tr class="memitem:a2e459bfb33a48a5dbc41b8199ca28c76"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a2e459bfb33a48a5dbc41b8199ca28c76">error_led</a> = 7</td></tr>
 <tr class="separator:a2e459bfb33a48a5dbc41b8199ca28c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fa7d3c9581606bf0323fbdc25d36090"><td class="memItemLeft" align="right" valign="top">char website_name_geoip[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a9fa7d3c9581606bf0323fbdc25d36090">PROGMEM</a> = &quot;freegeoip.net&quot;</td></tr>
-<tr class="separator:a9fa7d3c9581606bf0323fbdc25d36090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c443981ec51188cf74ec1efeab4a381"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a6c443981ec51188cf74ec1efeab4a381">lamp</a> = 6</td></tr>
+<tr class="separator:a6c443981ec51188cf74ec1efeab4a381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6c0d6df9ebcd8fcbdb9deb9bc4ca48b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ac6c0d6df9ebcd8fcbdb9deb9bc4ca48b">browserCallbackDatapos</a> =0</td></tr>
+<tr class="separator:ac6c0d6df9ebcd8fcbdb9deb9bc4ca48b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3607db133e5541593380d837ee2c35a5"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a3607db133e5541593380d837ee2c35a5">url_var_part</a> [<a class="el" href="_i_s_s_notify_8ino.html#acf70a18acd43539748fb6f326a03e142">URL_BUFF_SIZE</a>]</td></tr>
+<tr class="separator:a3607db133e5541593380d837ee2c35a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f986fb09ac3625e5a2d84fab949b7e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789">my_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a6f986fb09ac3625e5a2d84fab949b7e0">state</a> = <a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789aa7233cbe32327053c7d876c58c9502f5">STATE_GET_DATA</a></td></tr>
+<tr class="separator:a6f986fb09ac3625e5a2d84fab949b7e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3c8fc8c918d5dcaea019e8f53833587"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0">my_data_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ad3c8fc8c918d5dcaea019e8f53833587">state_data</a> = <a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0a6422c816a93cf9fb32394c4d8668288f">STATE_GET_DATA_GEOIP_LAT</a></td></tr>
+<tr class="separator:ad3c8fc8c918d5dcaea019e8f53833587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac12558ae5800cb6d3aef1bab36f85148"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182">my_cb_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#ac12558ae5800cb6d3aef1bab36f85148">state_cb</a> = <a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182aeabb76bcdaceacdf2c3f31be407da26b">STATE_CB_WAIT</a></td></tr>
+<tr class="separator:ac12558ae5800cb6d3aef1bab36f85148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7df696ded7fb92747cbccd245e827f9e"><td class="memItemLeft" align="right" valign="top">prog_char website_name_geoip[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a7df696ded7fb92747cbccd245e827f9e">PROGMEM</a> = &quot;freegeoip.net&quot;</td></tr>
+<tr class="separator:a7df696ded7fb92747cbccd245e827f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f1197abcedc2f614e5ecd4a5d6ba4bf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#a9f1197abcedc2f614e5ecd4a5d6ba4bf">website_ip_geoip</a> [4] = {0,0,0,0}</td></tr>
 <tr class="separator:a9f1197abcedc2f614e5ecd4a5d6ba4bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9163e1d5a1103950a904c9a590a432e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#aa9163e1d5a1103950a904c9a590a432e">website_ip_time</a> [4] = {0,0,0,0}</td></tr>
-<tr class="separator:aa9163e1d5a1103950a904c9a590a432e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf84b056a11ebced24b1b4322718430e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_s_s_notify_8ino.html#acf84b056a11ebced24b1b4322718430e">website_ip_iss</a> [4] = {0,0,0,0}</td></tr>
 <tr class="separator:acf84b056a11ebced24b1b4322718430e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Arduino code to activate a light when the International Space Station is above the current loctation. </p>
+<div class="textblock"><p>Arduino sketch to activate a light when the International Space Station is above the current loctation. </p>
 <dl class="section author"><dt>Author</dt><dd>Marc Khouri (<a href="#" onclick="location.href='mai'+'lto:'+'mar'+'c@'+'kho'+'ur'+'i.c'+'a'; return false;">marc@<span style="display: none;">.nosp@m.</span>khou<span style="display: none;">.nosp@m.</span>ri.ca</a>) </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>April 2014 This is an Arduino sketch that communicates with an ENC28J60 ethernet interface to fetch the current date and time, the approximate location via IP address reverse lookup, and a list of future passes of the International Space Station above the current location. When the ISS is above, the Arduino activates an output connected to a lamp.</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>April 2014</dd></dl>
+<p>This is an Arduino sketch that communicates with an ENC28J60 ethernet interface to fetch the current date and time, the approximate location via IP address reverse lookup, and a list of future passes of the International Space Station above the current location. When the ISS is above, the Arduino activates an output connected to a lamp.</p>
 <div class="fragment"><div class="line">ENC    PATA    Arduino</div>
-<div class="line">       VCC       wire 2  3.3v</div>
-<div class="line">       GND       wire 1  GND</div>
-<div class="line">       SCK       wire 5  Pin 13</div>
-<div class="line">       SO    wire 7  Pin 12</div>
-<div class="line">       SI    wire 6  Pin 11</div>
-<div class="line">       CS    wire 4  Pin 8</div>
-</div><!-- fragment --><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>write the entire program </dd></dl>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>none </dd></dl>
+<div class="line">VCC       wire 2  3.3v</div>
+<div class="line">GND       wire 1  GND</div>
+<div class="line">SCK       wire 5  Pin 13</div>
+<div class="line">SO    wire 7  Pin 12</div>
+<div class="line">SI    wire 6  Pin 11</div>
+<div class="line">CS    wire 4  Pin 8</div>
+</div><!-- fragment --><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd><p class="startdd">my_itoa is flawed (or there is an error with the variables it is writing to, e.g. too small) </p>
+<p>refactor to use structs </p>
+<p class="enddd">use PRINT_TOKEN macro to reduce line count </p>
+</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>Unexplained behaviour: function ether.browseUrl seems to make its request from the ip identified by ether.dnsLookup(website_name), which is called in my function fill_ip_with_dns, instead of from the address passed to it. </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a5d56419a84adf86a92e869e516ff37af"></a>
+<a class="anchor" id="a9a0321cdbdf03d0993c8619c2bb94f94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define REQUEST_RATE&#160;&#160;&#160;5000</td>
+          <td class="memname">#define HOUR_IN_MILLIS&#160;&#160;&#160;<a class="el" href="_i_s_s_notify_8ino.html#ae3f14d5c786fb27f4cb9a5b934590f10">MINUTE_IN_MILLIS</a>*60L</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ab71ddbc309b1e68c72dee2c07d3db0ef"></a>
+<a class="anchor" id="ae3f14d5c786fb27f4cb9a5b934590f10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t fill_ip_with_DNS </td>
+          <td class="memname">#define MINUTE_IN_MILLIS&#160;&#160;&#160;(1000*60L)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa84043f76ec1d7faa114a40c94589570"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRINT_TOKEN</td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">token</td><td>)</td>
+          <td>&#160;&#160;&#160;Serial.println(#token &quot; is %d&quot;, token)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5d56419a84adf86a92e869e516ff37af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define REQUEST_RATE&#160;&#160;&#160;20000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae1ca25eac6016e0d1a9b120241043038"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RETURN_LEN_GEOIPLAT&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa46b9aae668f9e8b54178527bd528051"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RETURN_LEN_GEOIPLONG&#160;&#160;&#160;9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3b73b5e8507166939a044ae8a0bb104d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RETURN_LEN_ISSDURATION&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0cf98d1948637d9df340e345f3e99693"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RETURN_LEN_ISSRISETIME&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a468deef5eef07ea1dd7dc505a7b0c5c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RETURN_LEN_TIME&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acf70a18acd43539748fb6f326a03e142"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define URL_BUFF_SIZE&#160;&#160;&#160;75</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="acdaa483586eb331c9dbe3e0b6ef40182"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182">my_cb_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="acdaa483586eb331c9dbe3e0b6ef40182aeabb76bcdaceacdf2c3f31be407da26b"></a>STATE_CB_WAIT</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="acdaa483586eb331c9dbe3e0b6ef40182a1810da35ccacd9c17c48540149ea8755"></a>STATE_CB_READY</em>&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="a918cb555af2a664e06635e23b9ec9ff0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0">my_data_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a918cb555af2a664e06635e23b9ec9ff0a6422c816a93cf9fb32394c4d8668288f"></a>STATE_GET_DATA_GEOIP_LAT</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a918cb555af2a664e06635e23b9ec9ff0aeeef0fa293537afbfa88a26f36ec7e18"></a>STATE_GET_DATA_GEOIP_LONG</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a918cb555af2a664e06635e23b9ec9ff0ab6108065f88af10509fe87eadc7e0483"></a>STATE_GET_DATA_TIME</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a918cb555af2a664e06635e23b9ec9ff0adb28d1436d09d617705c744822118441"></a>STATE_GET_DATA_ISS_RISETIME</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a918cb555af2a664e06635e23b9ec9ff0a19b96153f44beed2348c27a8932f1d03"></a>STATE_GET_DATA_ISS_DURATION</em>&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ab0229a3afc399b968897945cd8695789"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789">my_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ab0229a3afc399b968897945cd8695789aa7233cbe32327053c7d876c58c9502f5"></a>STATE_GET_DATA</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ab0229a3afc399b968897945cd8695789ae605de31f69c62a564f42f2974ba7836"></a>STATE_PROCESS_DATA</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ab0229a3afc399b968897945cd8695789a608c53a1dbd68672aed4b89060125da9"></a>STATE_CALCULATE</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ab0229a3afc399b968897945cd8695789acc9458e203404c1e282d01bd1d41f819"></a>STATE_LIGHT_LAMP</em>&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ab0229a3afc399b968897945cd8695789ab48b45c95e46f218dca2c1eb5e59ca7e"></a>STATE_SLEEP</em>&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a2d8df359d5deaa34f85d7e03b82fb5c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t fill_ip_with_dns </td>
+          <td>(</td>
+          <td class="paramtype">prog_char *&#160;</td>
           <td class="paramname"><em>website_name</em>, </td>
         </tr>
         <tr>
@@ -241,6 +511,76 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ac21932dacfce19b3633060a0ce671e62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t my_atoi </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7fc928a32525902d309d62686c057f7b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parse_data </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>inputData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>keyword</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>outputlength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aeefd69796792390e4f8ed237595ebbc6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_p </td>
+          <td>(</td>
+          <td class="paramtype">const prog_char&#160;</td>
+          <td class="paramname"><em>str</em>[]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -257,24 +597,96 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a2e459bfb33a48a5dbc41b8199ca28c76"></a>
+<a class="anchor" id="ac6c0d6df9ebcd8fcbdb9deb9bc4ca48b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int error_led = 13</td>
+          <td class="memname">uint16_t browserCallbackDatapos =0</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9fa7d3c9581606bf0323fbdc25d36090"></a>
+<a class="anchor" id="a2e459bfb33a48a5dbc41b8199ca28c76"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char website_name_iss [] PROGMEM = &quot;freegeoip.net&quot;</td>
+          <td class="memname">int error_led = 7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6c443981ec51188cf74ec1efeab4a381"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int lamp = 6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7df696ded7fb92747cbccd245e827f9e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">prog_char website_name_iss [] PROGMEM = &quot;freegeoip.net&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6f986fb09ac3625e5a2d84fab949b7e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789">my_state_t</a> state = <a class="el" href="_i_s_s_notify_8ino.html#ab0229a3afc399b968897945cd8695789aa7233cbe32327053c7d876c58c9502f5">STATE_GET_DATA</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac12558ae5800cb6d3aef1bab36f85148"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182">my_cb_state_t</a> state_cb = <a class="el" href="_i_s_s_notify_8ino.html#acdaa483586eb331c9dbe3e0b6ef40182aeabb76bcdaceacdf2c3f31be407da26b">STATE_CB_WAIT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad3c8fc8c918d5dcaea019e8f53833587"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0">my_data_state_t</a> state_data = <a class="el" href="_i_s_s_notify_8ino.html#a918cb555af2a664e06635e23b9ec9ff0a6422c816a93cf9fb32394c4d8668288f">STATE_GET_DATA_GEOIP_LAT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3607db133e5541593380d837ee2c35a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char url_var_part[<a class="el" href="_i_s_s_notify_8ino.html#acf70a18acd43539748fb6f326a03e142">URL_BUFF_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -305,22 +717,10 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa9163e1d5a1103950a904c9a590a432e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t website_ip_time[4] = {0,0,0,0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Apr 18 2014 21:01:29 for ISS Notify by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 24 2014 18:12:57 for ISS Notify by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

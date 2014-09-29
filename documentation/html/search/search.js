@@ -7,12 +7,14 @@
 
 var indexSectionsWithContent =
 {
-  0: "befilprstw",
+  0: "befhilmprstuw",
   1: "ir",
-  2: "fils",
-  3: "epw",
-  4: "r",
-  5: "bit"
+  2: "filmps",
+  3: "belpsuw",
+  4: "m",
+  5: "s",
+  6: "hmpru",
+  7: "bit"
 };
 
 var indexSectionNames =
@@ -21,8 +23,10 @@ var indexSectionNames =
   1: "files",
   2: "functions",
   3: "variables",
-  4: "defines",
-  5: "pages"
+  4: "enums",
+  5: "enumvalues",
+  6: "defines",
+  7: "pages"
 };
 
 function convertToId(search)
