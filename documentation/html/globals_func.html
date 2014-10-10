@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -81,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -92,23 +93,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="contents">
 &#160;<ul>
-<li>fill_ip_with_dns()
-: <a class="el" href="_i_s_s_notify_8ino.html#a2d8df359d5deaa34f85d7e03b82fb5c7">ISSNotify.ino</a>
+<li>ethercard_callback()
+: <a class="el" href="_networking_8cpp.html#a8868f60ed59b66d9a3377bc822e76fe7">Networking.cpp</a>
+, <a class="el" href="_networking_8h.html#a8868f60ed59b66d9a3377bc822e76fe7">Networking.h</a>
+</li>
+<li>get_ip_via_dns()
+: <a class="el" href="_networking_8cpp.html#a17231c8c02eb9065c3451eba03dbea7d">Networking.cpp</a>
+, <a class="el" href="_networking_8h.html#a17231c8c02eb9065c3451eba03dbea7d">Networking.h</a>
 </li>
 <li>init_DHCP()
-: <a class="el" href="_i_s_s_notify_8ino.html#a7d1cc8195747a623651b5919752b5d71">ISSNotify.ino</a>
+: <a class="el" href="_networking_8cpp.html#ac605acc15c2e27486af04985d80273dd">Networking.cpp</a>
+, <a class="el" href="_networking_8h.html#ac605acc15c2e27486af04985d80273dd">Networking.h</a>
 </li>
 <li>loop()
 : <a class="el" href="_i_s_s_notify_8ino.html#afe461d27b9c48d5921c00d521181f12f">ISSNotify.ino</a>
 </li>
 <li>my_atoi()
-: <a class="el" href="_i_s_s_notify_8ino.html#ac21932dacfce19b3633060a0ce671e62">ISSNotify.ino</a>
+: <a class="el" href="_data_processing_8cpp.html#ac21932dacfce19b3633060a0ce671e62">DataProcessing.cpp</a>
+, <a class="el" href="_data_processing_8h.html#ac21932dacfce19b3633060a0ce671e62">DataProcessing.h</a>
 </li>
 <li>parse_data()
-: <a class="el" href="_i_s_s_notify_8ino.html#a7fc928a32525902d309d62686c057f7b">ISSNotify.ino</a>
+: <a class="el" href="_data_processing_8cpp.html#a7fc928a32525902d309d62686c057f7b">DataProcessing.cpp</a>
+, <a class="el" href="_data_processing_8h.html#a7fc928a32525902d309d62686c057f7b">DataProcessing.h</a>
 </li>
 <li>print_p()
-: <a class="el" href="_i_s_s_notify_8ino.html#aeefd69796792390e4f8ed237595ebbc6">ISSNotify.ino</a>
+: <a class="el" href="_printing_8cpp.html#aeefd69796792390e4f8ed237595ebbc6">Printing.cpp</a>
+, <a class="el" href="_printing_8h.html#aeefd69796792390e4f8ed237595ebbc6">Printing.h</a>
 </li>
 <li>setup()
 : <a class="el" href="_i_s_s_notify_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">ISSNotify.ino</a>
@@ -117,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 24 2014 18:12:57 for ISS Notify by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 20:40:05 for ISS Notify by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

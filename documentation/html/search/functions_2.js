@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loop',['loop',['../_i_s_s_notify_8ino.html#afe461d27b9c48d5921c00d521181f12f',1,'ISSNotify.ino']]]
+  ['init_5fdhcp',['init_DHCP',['../_networking_8cpp.html#ac605acc15c2e27486af04985d80273dd',1,'init_DHCP(uint8_t *ethernet_buffer):&#160;Networking.cpp'],['../_networking_8h.html#ac605acc15c2e27486af04985d80273dd',1,'init_DHCP(uint8_t *ethernet_buffer):&#160;Networking.cpp']]]
 ];

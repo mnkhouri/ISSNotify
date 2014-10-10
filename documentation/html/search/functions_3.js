@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['my_5fatoi',['my_atoi',['../_i_s_s_notify_8ino.html#ac21932dacfce19b3633060a0ce671e62',1,'ISSNotify.ino']]]
+  ['loop',['loop',['../_i_s_s_notify_8ino.html#afe461d27b9c48d5921c00d521181f12f',1,'ISSNotify.ino']]]
 ];
