@@ -8,6 +8,13 @@
 #ifndef __NETWORKING_H_
 #define __NETWORKING_H_
 
+#include <stdint.h>
+#include <EtherCard.h>
+#include "Printing.h"
+#include "States.h"
+
+extern uint16_t callback_data_position; //Used by ethercard_callback to indicate position of new data within the ethernet buffer
+
 /**
 * @name    ethercard_callback
 * @brief   Called by the ethercard library when the client request is complete.
@@ -16,7 +23,7 @@
 *
 * @param [out]  off  The offset 
 */
-static void ethercard_callback(byte status, word off, word len);
+void ethercard_callback(byte status, word off, word len);
 
 /**
 * @name    init_DHCP
@@ -28,7 +35,7 @@ static void ethercard_callback(byte status, word off, word len);
 * @retval 1  Failed to access Ethernet controller
 * @retval 2  Failed to acquire DHCP
 */
-uint8_t init_DHCP(void);
+uint8_t init_DHCP(uint8_t *ethernet_buffer);
 
 /**
 * @name    get_ip_via_dns

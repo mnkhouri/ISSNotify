@@ -8,6 +8,8 @@
 #ifndef __DATAPROCESSING_H_
 #define __DATAPROCESSING_H_
 
+#include <stdint.h>
+
 /**
 * @name    my_atoi
 * @brief   Converts a string to a 32 bit integer

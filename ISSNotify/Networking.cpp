@@ -1,11 +1,19 @@
 /**
-* @file   Networking.c
+* @file   Networking.cpp
 * @author Marc Khouri (marc@khouri.ca)
 * @date   April 2014
 * @brief  Networking helpers (to use with the EtherCard library)
 **/
 
+#include <stdint.h>
+#include <EtherCard.h>
+#include "Printing.h"
+#include "States.h"
 #include "Networking.h"
+#include "Definitions.h"
+
+static uint8_t  mymac[] = {0x74,0x69,0x69,0x2D,0x30,0x31};
+uint16_t callback_data_position = 0; //Used by ethercard_callback to indicate position of new data within the ethernet buffer
 
 /**
 * @name    ethercard_callback
@@ -13,15 +21,16 @@
 *
 * @note   params must be: byte status, word off, word len
 */
-static void ethercard_callback(byte status, word off, word len){
+void ethercard_callback(byte status, word off, word len){
 	if(status){
 		print_p(PSTR("WARNING: web request returned status code != 200"));
 		Serial.println((const char*) Ethernet::buffer + off);
 	}
-	Serial.print("<<< reply ");
-	Serial.print(millis() - timer);
-	Serial.println(" ms");
-	browserCallbackDatapos=off;
+	print_p(PSTR("<<< reply received\n"));
+	#ifdef DEBUG_VERBOSE
+		Serial.println((const char*) Ethernet::buffer + off);
+	#endif
+	callback_data_position=off;
 	state_cb = STATE_CB_READY;
 }
 
@@ -35,8 +44,8 @@ static void ethercard_callback(byte status, word off, word len){
 * @retval 1  Failed to access Ethernet controller
 * @retval 2  Failed to acquire DHCP
 */
-uint8_t init_DHCP(void){
-	if (ether.begin(sizeof Ethernet::buffer, mymac) == 0){
+uint8_t init_DHCP(uint8_t *ethernet_buffer){
+	if (ether.begin(sizeof ethernet_buffer, mymac) == 0){
 		print_p(PSTR("Failed to access Ethernet controller\n"));
 		return 1;
 	} 

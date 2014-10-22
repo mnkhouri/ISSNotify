@@ -1,10 +1,12 @@
 /**
-* @file   Printing.c
+* @file   Printing.cpp
 * @author Marc Khouri (marc@khouri.ca)
 * @date   April 2014
 * @brief  Printing helper functions
 **/
 
+#include <avr/pgmspace.h>
+#include <Arduino.h>
 #include "Printing.h"
 
 /**

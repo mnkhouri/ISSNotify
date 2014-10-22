@@ -8,6 +8,9 @@
 #ifndef __PRINTING_H_
 #define __PRINTING_H_
 
+#include <avr/pgmspace.h>
+#include <Arduino.h>
+
 /**
 * @name    PRINT_TOKEN
 * @brief   Macro to print a variable name and its value

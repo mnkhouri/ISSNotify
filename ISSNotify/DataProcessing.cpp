@@ -1,11 +1,14 @@
 /**
-* @file   DataProcessing.c
+* @file   DataProcessing.cpp
 * @author Marc Khouri (marc@khouri.ca)
 * @date   April 2014
 * @brief  Data processing helpers
 **/
 
+#include <stdint.h>
+#include "Printing.h"
 #include "DataProcessing.h"
+#include "Definitions.h"
 
 /**
 *  @name parse_data

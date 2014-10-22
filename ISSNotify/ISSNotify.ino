@@ -24,29 +24,26 @@
 * @todo refactor to use structs
 * @bug Unexplained behaviour: function ether.browseUrl seems to make its request from the ip identified by ether.dnsLookup(website_name), which is called in my function get_ip_via_dns, instead of from the address passed to it.
 */
-#undef DEBUG_VERBOSE
-
+#include <stdint.h>
+#include <avr/pgmspace.h>
 #include <EtherCard.h>
 #include "DataProcessing.h"
 #include "Printing.h"
 #include "Networking.h"
+#include "States.h"
+#include "Definitions.h"
 
-//useful defines
-#define         MINUTE_IN_MILLIS (1000*60L)
-#define         HOUR_IN_MILLIS MINUTE_IN_MILLIS*60L
-
-//define constants
+//constants
 #define         REQUEST_RATE 20000 // milliseconds
-#define         URL_BUFF_SIZE 75
+#define         URL_BUFF_SIZE 75 //Size of buffer for variable portion of URLs
+#define         ETHERCARD_BUFF_SIZE 750 //Size of buffer for ethercard library. Should be at least 750 to fit all data returned by geo-ip API
 //output pins
 int             error_led = 7;
 int             lamp = 6;
 //global variables
-static uint32_t timer;
-static uint8_t  mymac[] = {0x74,0x69,0x69,0x2D,0x30,0x31};
-uint16_t        browserCallbackDatapos=0;
-uint8_t         Ethernet::buffer[500];
+static          uint32_t timer;
 char            url_var_part[URL_BUFF_SIZE];
+uint8_t         Ethernet::buffer[ETHERCARD_BUFF_SIZE];
 
 //system states 
 typedef enum {
@@ -55,21 +52,17 @@ typedef enum {
 	STATE_CALCULATE = 2,
 	STATE_LIGHT_LAMP = 3,
 	STATE_SLEEP = 4
-} my_state_t;
+} state_t;
 typedef enum {
 	STATE_GET_DATA_GEOIP_LAT = 0,
 	STATE_GET_DATA_GEOIP_LONG = 1,
 	STATE_GET_DATA_TIME = 2,
 	STATE_GET_DATA_ISS_RISETIME = 3,
 	STATE_GET_DATA_ISS_DURATION = 4
-} my_data_state_t;
-typedef enum {
-	STATE_CB_WAIT = 0,
-	STATE_CB_READY = 1,
-} my_cb_state_t;
-my_state_t state = STATE_GET_DATA;
-my_data_state_t state_data = STATE_GET_DATA_GEOIP_LAT;
-my_cb_state_t state_cb = STATE_CB_WAIT;
+} state_data_t;
+state_t state = STATE_GET_DATA;
+state_data_t state_data = STATE_GET_DATA_GEOIP_LAT;
+state_cb_t state_cb = STATE_CB_WAIT; //declared in States.h
 
 //keywords and addresses for data acquisition
 prog_char           website_name_geoip[] PROGMEM = "freegeoip.net"; //website names must be in PROGMEM for ethercard lib
@@ -95,6 +88,24 @@ static const char   keyword_issrisetime[]="risetime\": "; //keyword to use when 
 static char         issrisetime_string[RETURN_LEN_ISSRISETIME+1];
 static uint32_t     issrisetime=0;
 
+static uint8_t  mymac2[] = {0x74,0x69,0x69,0x2D,0x30,0x36};
+uint8_t init_DHCP2(uint8_t *ethernet_buffer){
+	if (ether.begin(sizeof ethernet_buffer, mymac2) == 0){
+		print_p(PSTR("Failed to access Ethernet controller\n"));
+		return 1;
+	} 
+	else if (!ether.dhcpSetup()){
+		print_p(PSTR("DHCP failed\n"));
+		return 2;
+	}
+	else {  
+		ether.printIp("My IP: ", ether.myip);
+		ether.printIp("GW IP: ", ether.gwip);
+		ether.printIp("DNS IP: ", ether.dnsip); 
+		return 0;
+	}
+}
+
 void setup () {
 	pinMode(error_led, OUTPUT);
 	pinMode(lamp, OUTPUT);
@@ -102,14 +113,30 @@ void setup () {
 	print_p(PSTR("\n[ISS Notification Lamp]\n"));
 	print_p(PSTR("Marc Khouri - marc.khouri.ca - github.com/mnkhouri\n"));
 
-	while(init_DHCP()){  //continue initializing DHCP until success (return value=0)
+	
+	if (ether.begin(sizeof Ethernet::buffer, mymac2) == 0) 
+    Serial.println( "Failed to access Ethernet controller");
+
+  Serial.println("Setting up DHCP");
+  if (!ether.dhcpSetup())
+    Serial.println( "DHCP failed");
+  
+  ether.printIp("My IP: ", ether.myip);
+  ether.printIp("Netmask: ", ether.netmask);
+  ether.printIp("GW IP: ", ether.gwip);
+  ether.printIp("DNS IP: ", ether.dnsip);
+	
+	/*
+
+	while(init_DHCP2(Ethernet::buffer)){  //continue initializing DHCP until success (return value=0)
 		delay(1000);
+		Serial.print("uh-oh");
 		digitalWrite(error_led, HIGH); 
 	}
-	digitalWrite(error_led, LOW);
+	digitalWrite(error_led, LOW); */
 
 	uint8_t ip_initialized=1;
-	while(ip_initialized){ //loop until all 3 get_ip_via_dns functions return success (retval=0)
+	while(ip_initialized){ //check that all websites are reacheable by using DNS to get their IP address. When get_ip_via_dns() returns 0, DNS lookup was successful.
 		print_p(PSTR("Requesting site IPs via DNS\n"));
 		ip_initialized = 0;
 		ip_initialized += get_ip_via_dns(website_name_geoip, website_ip_geoip);
@@ -124,7 +151,6 @@ void setup () {
 
 void loop () {
 	ether.packetLoop(ether.packetReceive());
-	uint32_t sleep_timer;
 	uint32_t millis_at_time_of_request;
 	int32_t millis_until_risetime;
 
@@ -142,7 +168,7 @@ void loop () {
 			state = STATE_PROCESS_DATA;
 			break;
 		case STATE_GET_DATA_TIME: //same request as ISS_RISETIME
-		case STATE_GET_DATA_ISS_DURATION: //same request as ISS Risetime
+		case STATE_GET_DATA_ISS_DURATION: //same request as ISS_RISETIME
 		case STATE_GET_DATA_ISS_RISETIME:
 			// request format http://api.open-notify.org/iss-pass.json?lat=<LAT>&lon=<LONG>
 			timer = millis();
@@ -179,21 +205,21 @@ void loop () {
 			switch(state_data){
 			case STATE_GET_DATA_GEOIP_LAT:
 				print_p(PSTR("Got latitude response\n"));
-				parse_data((char*)&Ethernet::buffer[browserCallbackDatapos], keyword_geoiplat, geoiplat_string, RETURN_LEN_GEOIPLAT);
+				parse_data((char*)&Ethernet::buffer[callback_data_position], keyword_geoiplat, geoiplat_string, RETURN_LEN_GEOIPLAT);
 				PRINT_TOKEN(geoiplat_string);
 				state_data = STATE_GET_DATA_GEOIP_LONG;
 				state = STATE_GET_DATA;
 				break;
 			case STATE_GET_DATA_GEOIP_LONG:
 				print_p(PSTR("Got longitude response\n"));
-				parse_data((char*)&Ethernet::buffer[browserCallbackDatapos], keyword_geoiplong, geoiplong_string, RETURN_LEN_GEOIPLONG);
+				parse_data((char*)&Ethernet::buffer[callback_data_position], keyword_geoiplong, geoiplong_string, RETURN_LEN_GEOIPLONG);
 				PRINT_TOKEN(geoiplong_string);
 				state_data = STATE_GET_DATA_TIME;
 				state = STATE_GET_DATA;
 				break;
 			case STATE_GET_DATA_TIME:
 				print_p(PSTR("Got time response\n"));
-				parse_data((char*)&Ethernet::buffer[browserCallbackDatapos], keyword_time, time_of_request_string, RETURN_LEN_TIME);
+				parse_data((char*)&Ethernet::buffer[callback_data_position], keyword_time, time_of_request_string, RETURN_LEN_TIME);
 				time_of_request = my_atoi(time_of_request_string);
 				PRINT_TOKEN(time_of_request_string);
 				PRINT_TOKEN(time_of_request);
@@ -204,7 +230,7 @@ void loop () {
 				break;
 			case STATE_GET_DATA_ISS_DURATION:
 				print_p(PSTR("Got ISS duration response\n"));
-				parse_data((char*)&Ethernet::buffer[browserCallbackDatapos], keyword_issduration, issduration_string, RETURN_LEN_ISSDURATION);
+				parse_data((char*)&Ethernet::buffer[callback_data_position], keyword_issduration, issduration_string, RETURN_LEN_ISSDURATION);
 				issduration = my_atoi(issduration_string);
 				PRINT_TOKEN(issduration_string);
 				PRINT_TOKEN(issduration);
@@ -213,7 +239,7 @@ void loop () {
 				break;
 			case STATE_GET_DATA_ISS_RISETIME:
 				print_p(PSTR("Got ISS risetime response\n"));
-				parse_data((char*)&Ethernet::buffer[browserCallbackDatapos], keyword_issrisetime, issrisetime_string, RETURN_LEN_ISSRISETIME);
+				parse_data((char*)&Ethernet::buffer[callback_data_position], keyword_issrisetime, issrisetime_string, RETURN_LEN_ISSRISETIME);
 				issrisetime = my_atoi(issrisetime_string);
 				PRINT_TOKEN(issrisetime_string);
 				PRINT_TOKEN(issrisetime);
